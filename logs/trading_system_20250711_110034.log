@@ -1,0 +1,4 @@
+2025-07-11 11:00:34,605 - trading_system - INFO - Logging system initialized
+2025-07-11 11:00:34,605 - trading_system - INFO - Log file: logs/trading_system_20250711_110034.log
+2025-07-11 11:00:34,605 - trading_system - INFO - Log level: INFO
+2025-07-11 11:00:34,605 - __main__ - ERROR - Error in main execution: KITE_API_KEY environment variable is required

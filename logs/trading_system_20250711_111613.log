@@ -1,0 +1,207 @@
+2025-07-11 11:16:13,970 - trading_system - INFO - Logging system initialized
+2025-07-11 11:16:13,970 - trading_system - INFO - Log file: logs/trading_system_20250711_111613.log
+2025-07-11 11:16:13,970 - trading_system - INFO - Log level: INFO
+2025-07-11 11:16:13,970 - root - INFO - Trading system initialized successfully
+2025-07-11 11:16:13,985 - werkzeug - WARNING -  * Debugger is active!
+2025-07-11 11:16:13,986 - werkzeug - INFO -  * Debugger PIN: 132-425-137
+2025-07-11 11:16:14,073 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:16:14] "GET / HTTP/1.1" 200 -
+2025-07-11 11:16:22,435 - werkzeug - INFO - 127.0.0.1 - - [11/Jul/2025 11:16:22] "GET / HTTP/1.1" 200 -
+2025-07-11 11:16:45,023 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:16:45] "POST /run-analysis HTTP/1.1" 200 -
+2025-07-11 11:16:45,028 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:16:45,029 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:16:45,030 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:16:45,045 - services.trading_orchestrator - INFO - Trading workflow created successfully
+2025-07-11 11:16:45,046 - services.trading_orchestrator - INFO - Trading orchestrator initialized successfully
+2025-07-11 11:16:45,046 - services.trading_orchestrator - INFO - Starting trading cycle...
+2025-07-11 11:16:45,052 - services.trading_orchestrator - INFO - Processing market data...
+2025-07-11 11:16:45,052 - agents.market_data_agent - INFO - Fetching market data for RELIANCE
+2025-07-11 11:16:45,052 - services.kite_mcp_client - INFO - Using sample data for quote: RELIANCE
+2025-07-11 11:16:45,053 - services.kite_mcp_client - INFO - Using sample data for historical data: RELIANCE
+2025-07-11 11:16:45,082 - agents.market_data_agent - INFO - Successfully fetched market data for RELIANCE
+2025-07-11 11:16:45,102 - agents.market_data_agent - INFO - Using sample LLM service for market analysis
+2025-07-11 11:16:45,104 - services.trading_orchestrator - INFO - Processing technical analysis...
+2025-07-11 11:16:45,142 - agents.technical_analysis_agent - INFO - Technical indicators calculated successfully
+2025-07-11 11:16:45,142 - agents.technical_analysis_agent - INFO - Using sample LLM service for technical pattern analysis
+2025-07-11 11:16:45,144 - services.trading_orchestrator - INFO - Processing signal generation...
+2025-07-11 11:16:45,144 - strategies.simple_rsi_strategy - INFO - RSI Strategy Signal: HOLD (RSI: 39.29, Strength: weak)
+2025-07-11 11:16:45,144 - agents.signal_generation_agent - INFO - Using sample LLM service for signal generation
+2025-07-11 11:16:45,145 - services.trading_orchestrator - INFO - Processing risk assessment...
+2025-07-11 11:16:45,145 - agents.risk_assessment_agent - INFO - Using sample LLM service for risk analysis
+2025-07-11 11:16:45,146 - services.trading_orchestrator - INFO - Processing trade execution...
+2025-07-11 11:16:45,146 - services.trading_orchestrator - INFO - Trade not executed - Approval: approved, Signal: HOLD
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - === TRADING CYCLE RESULTS ===
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Symbol: RELIANCE
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Current Price: 2406.47
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Volume: 1000185
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Trend: sideways
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - RSI: 39.287668090212854
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Final Signal: HOLD
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Confidence: 59%
+2025-07-11 11:16:45,148 - services.trading_orchestrator - INFO - Risk Level: medium
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO - Trade Approval: approved
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO - Executed: False
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO - Order ID: None
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO - === AGENT MESSAGES ===
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO -   Starting trading analysis for RELIANCE
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO -   Market Data Agent: Processed data for RELIANCE
+2025-07-11 11:16:45,149 - services.trading_orchestrator - INFO -   Current Price: 2406.47
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Market Trend: bearish
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Volatility: high
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Technical Analysis Agent: Analysis completed
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   RSI: 39.287668090212854
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Trend: sideways
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Overall Score: 50
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Signal Generation Agent: Signals generated
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Primary Signal: HOLD
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   Confidence: 59%
+2025-07-11 11:16:45,150 - services.trading_orchestrator - INFO -   RSI Signal: HOLD
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Risk Assessment Agent: Analysis completed
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Risk Level: medium
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Trade Approval: approved
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Recommended Position: 16 shares
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Trade Execution: NOT_EXECUTED
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO -   Signal: HOLD, Approval: approved
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO - === END RESULTS ===
+2025-07-11 11:16:45,151 - services.trading_orchestrator - INFO - Trading cycle completed successfully
+2025-07-11 11:16:45,352 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:16:45] "GET /results HTTP/1.1" 200 -
+2025-07-11 11:16:46,199 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:16:46] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:03,542 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:03] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:05,774 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:05] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:06,874 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:06] "GET /results HTTP/1.1" 200 -
+2025-07-11 11:17:08,834 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:08] "GET /results HTTP/1.1" 200 -
+2025-07-11 11:17:16,210 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:16] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:40,631 - werkzeug - INFO - 127.0.0.1 - - [11/Jul/2025 11:17:40] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:46,215 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:17:46] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:17:46,456 - werkzeug - INFO - 127.0.0.1 - - [11/Jul/2025 11:17:46] "POST /run-analysis HTTP/1.1" 200 -
+2025-07-11 11:17:46,458 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:17:46,458 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:17:46,458 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:17:46,464 - services.trading_orchestrator - INFO - Trading workflow created successfully
+2025-07-11 11:17:46,464 - services.trading_orchestrator - INFO - Trading orchestrator initialized successfully
+2025-07-11 11:17:46,464 - services.trading_orchestrator - INFO - Starting trading cycle...
+2025-07-11 11:17:46,465 - services.trading_orchestrator - INFO - Processing market data...
+2025-07-11 11:17:46,465 - agents.market_data_agent - INFO - Fetching market data for RELIANCE
+2025-07-11 11:17:46,465 - services.kite_mcp_client - INFO - Using sample data for quote: RELIANCE
+2025-07-11 11:17:46,466 - services.kite_mcp_client - INFO - Using sample data for historical data: RELIANCE
+2025-07-11 11:17:46,485 - agents.market_data_agent - INFO - Successfully fetched market data for RELIANCE
+2025-07-11 11:17:46,486 - agents.market_data_agent - INFO - Using sample LLM service for market analysis
+2025-07-11 11:17:46,487 - services.trading_orchestrator - INFO - Processing technical analysis...
+2025-07-11 11:17:46,494 - agents.technical_analysis_agent - INFO - Technical indicators calculated successfully
+2025-07-11 11:17:46,495 - agents.technical_analysis_agent - INFO - Using sample LLM service for technical pattern analysis
+2025-07-11 11:17:46,496 - services.trading_orchestrator - INFO - Processing signal generation...
+2025-07-11 11:17:46,496 - strategies.simple_rsi_strategy - INFO - RSI Strategy Signal: HOLD (RSI: 57.40, Strength: weak)
+2025-07-11 11:17:46,496 - agents.signal_generation_agent - INFO - Using sample LLM service for signal generation
+2025-07-11 11:17:46,497 - services.trading_orchestrator - INFO - Processing risk assessment...
+2025-07-11 11:17:46,497 - agents.risk_assessment_agent - INFO - Using sample LLM service for risk analysis
+2025-07-11 11:17:46,497 - services.trading_orchestrator - INFO - Processing trade execution...
+2025-07-11 11:17:46,498 - services.trading_orchestrator - INFO - Trade not executed - Approval: approved, Signal: HOLD
+2025-07-11 11:17:46,498 - services.trading_orchestrator - INFO - === TRADING CYCLE RESULTS ===
+2025-07-11 11:17:46,498 - services.trading_orchestrator - INFO - Symbol: RELIANCE
+2025-07-11 11:17:46,499 - services.trading_orchestrator - INFO - Current Price: 2446.69
+2025-07-11 11:17:46,499 - services.trading_orchestrator - INFO - Volume: 793077
+2025-07-11 11:17:46,499 - services.trading_orchestrator - INFO - Trend: sideways
+2025-07-11 11:17:46,500 - services.trading_orchestrator - INFO - RSI: 57.397066846378365
+2025-07-11 11:17:46,500 - services.trading_orchestrator - INFO - Final Signal: HOLD
+2025-07-11 11:17:46,500 - services.trading_orchestrator - INFO - Confidence: 51%
+2025-07-11 11:17:46,500 - services.trading_orchestrator - INFO - Risk Level: medium
+2025-07-11 11:17:46,500 - services.trading_orchestrator - INFO - Trade Approval: approved
+2025-07-11 11:17:46,501 - services.trading_orchestrator - INFO - Executed: False
+2025-07-11 11:17:46,501 - services.trading_orchestrator - INFO - Order ID: None
+2025-07-11 11:17:46,501 - services.trading_orchestrator - INFO - === AGENT MESSAGES ===
+2025-07-11 11:17:46,501 - services.trading_orchestrator - INFO -   Starting trading analysis for RELIANCE
+2025-07-11 11:17:46,502 - services.trading_orchestrator - INFO -   Market Data Agent: Processed data for RELIANCE
+2025-07-11 11:17:46,503 - services.trading_orchestrator - INFO -   Current Price: 2446.69
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   Market Trend: bullish
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   Volatility: medium
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   Technical Analysis Agent: Analysis completed
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   RSI: 57.397066846378365
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   Trend: sideways
+2025-07-11 11:17:46,504 - services.trading_orchestrator - INFO -   Overall Score: 50
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Signal Generation Agent: Signals generated
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Primary Signal: HOLD
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Confidence: 51%
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   RSI Signal: HOLD
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Risk Assessment Agent: Analysis completed
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Risk Level: medium
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Trade Approval: approved
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Recommended Position: 16 shares
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Trade Execution: NOT_EXECUTED
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO -   Signal: HOLD, Approval: approved
+2025-07-11 11:17:46,505 - services.trading_orchestrator - INFO - === END RESULTS ===
+2025-07-11 11:17:46,506 - services.trading_orchestrator - INFO - Trading cycle completed successfully
+2025-07-11 11:17:54,639 - werkzeug - INFO - 127.0.0.1 - - [11/Jul/2025 11:17:54] "GET /results HTTP/1.1" 200 -
+2025-07-11 11:18:16,220 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:18:16] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:18:46,219 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:18:46] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:18:55,994 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:18:55] "POST /run-analysis HTTP/1.1" 200 -
+2025-07-11 11:18:55,997 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:18:55,997 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:18:55,997 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:18:56,003 - services.trading_orchestrator - INFO - Trading workflow created successfully
+2025-07-11 11:18:56,003 - services.trading_orchestrator - INFO - Trading orchestrator initialized successfully
+2025-07-11 11:18:56,003 - services.trading_orchestrator - INFO - Starting trading cycle...
+2025-07-11 11:18:56,004 - services.trading_orchestrator - INFO - Processing market data...
+2025-07-11 11:18:56,004 - agents.market_data_agent - INFO - Fetching market data for RELIANCE
+2025-07-11 11:18:56,004 - services.kite_mcp_client - INFO - Using sample data for quote: RELIANCE
+2025-07-11 11:18:56,004 - services.kite_mcp_client - INFO - Using sample data for historical data: RELIANCE
+2025-07-11 11:18:56,022 - agents.market_data_agent - INFO - Successfully fetched market data for RELIANCE
+2025-07-11 11:18:56,022 - agents.market_data_agent - INFO - Using sample LLM service for market analysis
+2025-07-11 11:18:56,023 - services.trading_orchestrator - INFO - Processing technical analysis...
+2025-07-11 11:18:56,028 - agents.technical_analysis_agent - INFO - Technical indicators calculated successfully
+2025-07-11 11:18:56,028 - agents.technical_analysis_agent - INFO - Using sample LLM service for technical pattern analysis
+2025-07-11 11:18:56,028 - services.trading_orchestrator - INFO - Processing signal generation...
+2025-07-11 11:18:56,028 - strategies.simple_rsi_strategy - INFO - RSI Strategy Signal: HOLD (RSI: 52.68, Strength: weak)
+2025-07-11 11:18:56,028 - agents.signal_generation_agent - INFO - Using sample LLM service for signal generation
+2025-07-11 11:18:56,029 - services.trading_orchestrator - INFO - Processing risk assessment...
+2025-07-11 11:18:56,029 - agents.risk_assessment_agent - INFO - Using sample LLM service for risk analysis
+2025-07-11 11:18:56,029 - services.trading_orchestrator - INFO - Processing trade execution...
+2025-07-11 11:18:56,029 - services.trading_orchestrator - INFO - Trade not executed - Approval: approved, Signal: HOLD
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - === TRADING CYCLE RESULTS ===
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Symbol: RELIANCE
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Current Price: 2410.42
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Volume: 1413517
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Trend: sideways
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - RSI: 52.679165207149936
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Final Signal: HOLD
+2025-07-11 11:18:56,030 - services.trading_orchestrator - INFO - Confidence: 65%
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO - Risk Level: medium
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO - Trade Approval: approved
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO - Executed: False
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO - Order ID: None
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO - === AGENT MESSAGES ===
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Starting trading analysis for RELIANCE
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Market Data Agent: Processed data for RELIANCE
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Current Price: 2410.42
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Market Trend: bearish
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Volatility: medium
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   Technical Analysis Agent: Analysis completed
+2025-07-11 11:18:56,031 - services.trading_orchestrator - INFO -   RSI: 52.679165207149936
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Trend: sideways
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Overall Score: 50
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Signal Generation Agent: Signals generated
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Primary Signal: HOLD
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Confidence: 65%
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   RSI Signal: HOLD
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Risk Assessment Agent: Analysis completed
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Risk Level: medium
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Trade Approval: approved
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Recommended Position: 16 shares
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Trade Execution: NOT_EXECUTED
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO -   Signal: HOLD, Approval: approved
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO - === END RESULTS ===
+2025-07-11 11:18:56,032 - services.trading_orchestrator - INFO - Trading cycle completed successfully
+2025-07-11 11:18:56,331 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:18:56] "GET /results HTTP/1.1" 200 -
+2025-07-11 11:19:16,234 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:19:16] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:19:47,209 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:19:47] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:20:17,204 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:20:17] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:20:47,224 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:20:47] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:21:17,227 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:21:17] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:21:47,246 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:21:47] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:22:17,639 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:22:17] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:22:47,667 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:22:47] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:23:17,676 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:23:17] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:23:47,700 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:23:47] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:24:18,116 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:24:18] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:24:48,416 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:24:48] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:25:18,936 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:25:18] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:25:49,606 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:25:49] "GET /status HTTP/1.1" 200 -
+2025-07-11 11:26:20,002 - werkzeug - INFO - 172.31.128.142 - - [11/Jul/2025 11:26:20] "GET /status HTTP/1.1" 200 -

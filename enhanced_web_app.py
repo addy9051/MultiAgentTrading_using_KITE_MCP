@@ -720,7 +720,7 @@ def create_enhanced_template():
     os.makedirs('templates', exist_ok=True)
     
     # Write template
-    with open('templates/enhanced_dashboard.html', 'w') as f:
+    with open("templates/enhanced_dashboard.html", "w", encoding="utf-8") as f:
         f.write(template_content)
 
 if __name__ == '__main__':

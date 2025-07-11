@@ -1,0 +1,63 @@
+2025-07-11 11:14:21,516 - trading_system - INFO - Logging system initialized
+2025-07-11 11:14:21,517 - trading_system - INFO - Log file: logs/trading_system_20250711_111421.log
+2025-07-11 11:14:21,517 - trading_system - INFO - Log level: INFO
+2025-07-11 11:14:21,517 - __main__ - INFO - Starting Multi-Agent Trading System MVP
+2025-07-11 11:14:21,517 - __main__ - INFO - Target Symbol: RELIANCE
+2025-07-11 11:14:21,517 - __main__ - INFO - MCP Server URL: http://localhost:8080
+2025-07-11 11:14:21,520 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:14:21,521 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:14:21,521 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:14:21,530 - services.trading_orchestrator - INFO - Trading workflow created successfully
+2025-07-11 11:14:21,531 - services.trading_orchestrator - INFO - Trading orchestrator initialized successfully
+2025-07-11 11:14:21,531 - services.trading_orchestrator - INFO - Starting trading cycle...
+2025-07-11 11:14:21,542 - services.trading_orchestrator - INFO - Processing market data...
+2025-07-11 11:14:21,542 - agents.market_data_agent - INFO - Fetching market data for RELIANCE
+2025-07-11 11:14:21,542 - services.kite_mcp_client - INFO - Using sample data for quote: RELIANCE
+2025-07-11 11:14:21,543 - services.kite_mcp_client - INFO - Using sample data for historical data: RELIANCE
+2025-07-11 11:14:21,560 - agents.market_data_agent - INFO - Successfully fetched market data for RELIANCE
+2025-07-11 11:14:21,560 - agents.market_data_agent - INFO - Using sample LLM service for market analysis
+2025-07-11 11:14:21,560 - services.trading_orchestrator - INFO - Processing technical analysis...
+2025-07-11 11:14:21,565 - agents.technical_analysis_agent - INFO - Technical indicators calculated successfully
+2025-07-11 11:14:21,565 - agents.technical_analysis_agent - INFO - Using sample LLM service for technical pattern analysis
+2025-07-11 11:14:21,566 - services.trading_orchestrator - INFO - Processing signal generation...
+2025-07-11 11:14:21,566 - strategies.simple_rsi_strategy - INFO - RSI Strategy Signal: HOLD (RSI: 57.74, Strength: weak)
+2025-07-11 11:14:21,566 - agents.signal_generation_agent - INFO - Using sample LLM service for signal generation
+2025-07-11 11:14:21,566 - services.trading_orchestrator - INFO - Processing risk assessment...
+2025-07-11 11:14:21,567 - agents.risk_assessment_agent - INFO - Using sample LLM service for risk analysis
+2025-07-11 11:14:21,567 - services.trading_orchestrator - INFO - Processing trade execution...
+2025-07-11 11:14:21,567 - services.trading_orchestrator - INFO - Trade not executed - Approval: approved, Signal: HOLD
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - === TRADING CYCLE RESULTS ===
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Symbol: RELIANCE
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Current Price: 2485.41
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Volume: 723318
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Trend: sideways
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - RSI: 57.73716219195879
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Final Signal: HOLD
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Confidence: 53%
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Risk Level: medium
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Trade Approval: approved
+2025-07-11 11:14:21,568 - services.trading_orchestrator - INFO - Executed: False
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO - Order ID: None
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO - === AGENT MESSAGES ===
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Starting trading analysis for RELIANCE
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Market Data Agent: Processed data for RELIANCE
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Current Price: 2485.41
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Market Trend: bullish
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Volatility: high
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Technical Analysis Agent: Analysis completed
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   RSI: 57.73716219195879
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Trend: sideways
+2025-07-11 11:14:21,569 - services.trading_orchestrator - INFO -   Overall Score: 50
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Signal Generation Agent: Signals generated
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Primary Signal: HOLD
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Confidence: 53%
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   RSI Signal: HOLD
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Risk Assessment Agent: Analysis completed
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Risk Level: medium
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Trade Approval: approved
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Recommended Position: 16 shares
+2025-07-11 11:14:21,570 - services.trading_orchestrator - INFO -   Trade Execution: NOT_EXECUTED
+2025-07-11 11:14:21,571 - services.trading_orchestrator - INFO -   Signal: HOLD, Approval: approved
+2025-07-11 11:14:21,571 - services.trading_orchestrator - INFO - === END RESULTS ===
+2025-07-11 11:14:21,571 - services.trading_orchestrator - INFO - Trading cycle completed successfully
+2025-07-11 11:14:21,571 - __main__ - INFO - Trading system completed successfully

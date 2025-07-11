@@ -1,0 +1,16 @@
+2025-07-11 17:26:22,480 - trading_system - INFO - Logging system initialized
+2025-07-11 17:26:22,480 - trading_system - INFO - Log file: logs/trading_system_20250711_172622.log
+2025-07-11 17:26:22,492 - trading_system - INFO - Log level: INFO
+2025-07-11 17:26:22,492 - trading_system - INFO - Initializing enhanced trading system...
+2025-07-11 17:26:24,789 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [The remote computer refused the network connection]
+2025-07-11 17:26:24,789 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 17:26:24,789 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 17:26:24,789 - trading_system - INFO - Enhanced trading system initialized successfully
+2025-07-11 17:26:24,869 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.124:5000
+2025-07-11 17:26:24,870 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-11 17:26:24,880 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-11 17:27:46,414 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000001E91D26F2D0>

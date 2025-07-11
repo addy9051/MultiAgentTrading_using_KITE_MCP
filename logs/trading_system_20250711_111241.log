@@ -1,0 +1,7 @@
+2025-07-11 11:12:41,507 - trading_system - INFO - Logging system initialized
+2025-07-11 11:12:41,507 - trading_system - INFO - Log file: logs/trading_system_20250711_111241.log
+2025-07-11 11:12:41,508 - trading_system - INFO - Log level: INFO
+2025-07-11 11:12:41,508 - __main__ - INFO - Starting Multi-Agent Trading System MVP
+2025-07-11 11:12:41,508 - __main__ - INFO - Target Symbol: RELIANCE
+2025-07-11 11:12:41,508 - __main__ - INFO - MCP Server URL: http://localhost:8080
+2025-07-11 11:12:41,652 - __main__ - ERROR - Error in main execution: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable

@@ -1,0 +1,133 @@
+2025-07-11 11:31:48,162 - trading_system - INFO - Logging system initialized
+2025-07-11 11:31:48,163 - trading_system - INFO - Log file: logs/trading_system_20250711_113148.log
+2025-07-11 11:31:48,163 - trading_system - INFO - Log level: INFO
+2025-07-11 11:31:48,163 - trading_system - INFO - === ENHANCED MULTI-AGENT TRADING SYSTEM STARTING ===
+2025-07-11 11:31:48,163 - trading_system - INFO - Architecture: TauricResearch/TradingAgents - 7 Agent System
+2025-07-11 11:31:48,163 - trading_system - INFO - Framework: LangChain + LangGraph
+2025-07-11 11:31:48,164 - trading_system - INFO - Stages: 5-Stage Workflow (Analysts → Research → Signals → Risk → Portfolio)
+2025-07-11 11:31:48,164 - trading_system - INFO - Target Symbol: RELIANCE
+2025-07-11 11:31:48,164 - trading_system - INFO - Simulation Mode: True
+2025-07-11 11:31:48,164 - trading_system - INFO - Using OpenAI API: False
+2025-07-11 11:31:48,183 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:31:48,183 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:31:48,183 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:31:48,183 - trading_system - INFO - Starting enhanced trading cycle...
+2025-07-11 11:31:48,183 - services.enhanced_trading_orchestrator - INFO - === STARTING ENHANCED TRADING CYCLE FOR RELIANCE ===
+2025-07-11 11:31:48,183 - services.enhanced_trading_orchestrator - INFO - STAGE I: Running Analyst Team (5 agents in parallel)
+2025-07-11 11:31:48,183 - services.enhanced_trading_orchestrator - INFO - Executing Stage I agents in parallel...
+2025-07-11 11:31:48,184 - services.enhanced_trading_orchestrator - INFO - Executing Market Data Agent...
+2025-07-11 11:31:48,184 - agents.market_data_agent - INFO - Fetching market data for RELIANCE
+2025-07-11 11:31:48,184 - services.kite_mcp_client - INFO - Using sample data for quote: RELIANCE
+2025-07-11 11:31:48,184 - services.kite_mcp_client - INFO - Using sample data for historical data: RELIANCE
+2025-07-11 11:31:48,237 - agents.market_data_agent - INFO - Successfully fetched market data for RELIANCE
+2025-07-11 11:31:48,237 - agents.market_data_agent - INFO - Using sample LLM service for market analysis
+2025-07-11 11:31:48,237 - services.enhanced_trading_orchestrator - INFO - Market Data Agent completed successfully
+2025-07-11 11:31:48,237 - services.enhanced_trading_orchestrator - INFO - Executing Technical Analysis Agent...
+2025-07-11 11:31:48,237 - agents.technical_analysis_agent - ERROR - Error processing technical analysis: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,237 - services.enhanced_trading_orchestrator - INFO - Technical Analysis Agent completed successfully
+2025-07-11 11:31:48,237 - services.enhanced_trading_orchestrator - INFO - Executing Fundamentals Analyst...
+2025-07-11 11:31:48,238 - agents.fundamentals_analyst - INFO - Processing fundamentals analysis...
+2025-07-11 11:31:48,238 - agents.fundamentals_analyst - ERROR - Error in fundamentals analysis processing: No market data available for fundamentals analysis
+2025-07-11 11:31:48,238 - services.enhanced_trading_orchestrator - INFO - Fundamentals Analyst completed successfully
+2025-07-11 11:31:48,238 - services.enhanced_trading_orchestrator - INFO - Executing Sentiment Analyst...
+2025-07-11 11:31:48,238 - agents.sentiment_analyst - INFO - Processing sentiment analysis...
+2025-07-11 11:31:48,238 - agents.sentiment_analyst - ERROR - Error in sentiment analysis processing: No market data available for sentiment analysis
+2025-07-11 11:31:48,238 - services.enhanced_trading_orchestrator - INFO - Sentiment Analyst completed successfully
+2025-07-11 11:31:48,238 - services.enhanced_trading_orchestrator - INFO - Executing News Analyst...
+2025-07-11 11:31:48,238 - agents.news_analyst - INFO - Processing news analysis...
+2025-07-11 11:31:48,238 - agents.news_analyst - ERROR - Error in news analysis processing: No market data available for news analysis
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - News Analyst completed successfully
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - Stage I completed successfully
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - STAGE II: Running Research Team (Bull vs Bear)
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - Executing Stage II agents in parallel...
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - Executing Bull Researcher...
+2025-07-11 11:31:48,239 - agents.bull_researcher - INFO - Processing bull research...
+2025-07-11 11:31:48,239 - agents.bull_researcher - INFO - Using sample LLM service for bull research
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - Bull Researcher completed successfully
+2025-07-11 11:31:48,239 - services.enhanced_trading_orchestrator - INFO - Executing Bear Researcher...
+2025-07-11 11:31:48,240 - agents.bear_researcher - INFO - Processing bear research...
+2025-07-11 11:31:48,240 - agents.bear_researcher - INFO - Using sample LLM service for bear research
+2025-07-11 11:31:48,240 - services.enhanced_trading_orchestrator - INFO - Bear Researcher completed successfully
+2025-07-11 11:31:48,240 - services.enhanced_trading_orchestrator - INFO - Stage II completed successfully
+2025-07-11 11:31:48,240 - services.enhanced_trading_orchestrator - INFO - STAGE III: Generating Trading Signals
+2025-07-11 11:31:48,240 - services.enhanced_trading_orchestrator - INFO - Executing Stage III agents sequentially...
+2025-07-11 11:31:48,240 - services.enhanced_trading_orchestrator - INFO - Executing Signal Generation Agent...
+2025-07-11 11:31:48,241 - strategies.simple_rsi_strategy - ERROR - Error generating RSI signal: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,241 - agents.signal_generation_agent - ERROR - Error generating simple signals: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,241 - agents.signal_generation_agent - INFO - Using sample LLM service for signal generation
+2025-07-11 11:31:48,241 - services.sample_llm_service - ERROR - Error in sample signal generation: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,241 - services.enhanced_trading_orchestrator - INFO - Signal Generation Agent completed successfully
+2025-07-11 11:31:48,241 - services.enhanced_trading_orchestrator - INFO - Stage III completed successfully
+2025-07-11 11:31:48,241 - services.enhanced_trading_orchestrator - INFO - STAGE IV: Risk Assessment
+2025-07-11 11:31:48,241 - services.enhanced_trading_orchestrator - INFO - Executing Stage IV agents sequentially...
+2025-07-11 11:31:48,241 - services.enhanced_trading_orchestrator - INFO - Executing Risk Assessment Agent...
+2025-07-11 11:31:48,242 - agents.risk_assessment_agent - ERROR - Error assessing market risk: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,242 - agents.risk_assessment_agent - INFO - Using sample LLM service for risk analysis
+2025-07-11 11:31:48,242 - services.sample_llm_service - ERROR - Error in sample risk assessment: 'NoneType' object has no attribute 'get'
+2025-07-11 11:31:48,242 - services.enhanced_trading_orchestrator - INFO - Risk Assessment Agent completed successfully
+2025-07-11 11:31:48,242 - services.enhanced_trading_orchestrator - INFO - Stage IV completed successfully
+2025-07-11 11:31:48,242 - services.enhanced_trading_orchestrator - INFO - STAGE V: Portfolio Management Decision
+2025-07-11 11:31:48,242 - services.enhanced_trading_orchestrator - INFO - Executing Stage V agents sequentially...
+2025-07-11 11:31:48,242 - services.enhanced_trading_orchestrator - INFO - Executing Portfolio Manager...
+2025-07-11 11:31:48,242 - agents.portfolio_manager - INFO - Processing portfolio decision...
+2025-07-11 11:31:48,242 - agents.portfolio_manager - INFO - Using sample LLM service for portfolio decision
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Portfolio Manager completed successfully
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Stage V completed successfully
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - === ENHANCED TRADING CYCLE RESULTS ===
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Symbol: RELIANCE
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Cycle ID: 201e085e-3183-4081-81c0-a4c24153070b
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Timestamp: 2025-07-11T11:31:48.183667
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Current Price: $2415.80
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Volume: 572,108
+2025-07-11 11:31:48,243 - services.enhanced_trading_orchestrator - INFO - Trend: unknown
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Financial Health: unknown
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Valuation: unknown
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Price Target: $0.00
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Sentiment: neutral
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Sentiment Score: 0.50
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - News Sentiment: neutral
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - News Impact: unknown
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Bull Case: ACCUMULATE
+2025-07-11 11:31:48,244 - services.enhanced_trading_orchestrator - INFO - Upside Potential: 15-25%
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Bear Case: REDUCE
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Downside Risk: 10-20%
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Trading Signal: HOLD
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Signal Confidence: 50%
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Risk Level: unknown
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Trade Approval: unknown
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Final Decision: HOLD
+2025-07-11 11:31:48,245 - services.enhanced_trading_orchestrator - INFO - Position Size: 1%
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO - Entry Price: $2415.80
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO - Risk-Reward: 2.00
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO - === AGENT MESSAGES ===
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Starting enhanced trading analysis for RELIANCE
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Fundamentals Analyst: Analysis failed - No market data available for fundamentals analysis
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Sentiment Analyst: Analysis failed - No market data available for sentiment analysis
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   News Analyst: Analysis failed - No market data available for news analysis
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Bull Researcher: Research completed for RELIANCE
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Bullish Thesis: RELIANCE presents compelling upside opportunity with 15-25% potential driven by strong fundamentals ...
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Upside Potential: 15-25%
+2025-07-11 11:31:48,246 - services.enhanced_trading_orchestrator - INFO -   Timeline: medium_term
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Recommended Action: ACCUMULATE
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Bear Researcher: Research completed for RELIANCE
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Bearish Thesis: RELIANCE faces significant downside risk with 10-20% potential decline due to valuation concerns and...
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Downside Potential: 10-20%
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Timeline: medium_term
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Recommended Action: REDUCE
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Signal Generation Agent: Signals generated
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Primary Signal: HOLD
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   Confidence: 50%
+2025-07-11 11:31:48,247 - services.enhanced_trading_orchestrator - INFO -   RSI Signal: N/A
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Risk Assessment Agent: Analysis completed
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Risk Level: extreme
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Trade Approval: rejected
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Recommended Position: 0 shares
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Portfolio Manager: Final decision for RELIANCE
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Decision: HOLD
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Position Size: 1%
+2025-07-11 11:31:48,248 - services.enhanced_trading_orchestrator - INFO -   Entry Price: $2415.80
+2025-07-11 11:31:48,249 - services.enhanced_trading_orchestrator - INFO -   Risk-Reward Ratio: 2.00
+2025-07-11 11:31:48,249 - services.enhanced_trading_orchestrator - INFO -   Confidence: 75%
+2025-07-11 11:31:48,249 - services.enhanced_trading_orchestrator - INFO - === END ENHANCED RESULTS ===
+2025-07-11 11:31:48,249 - services.enhanced_trading_orchestrator - INFO - === ENHANCED TRADING CYCLE COMPLETED FOR RELIANCE ===
+2025-07-11 11:31:48,249 - trading_system - INFO - === ENHANCED TRADING SYSTEM SUMMARY ===

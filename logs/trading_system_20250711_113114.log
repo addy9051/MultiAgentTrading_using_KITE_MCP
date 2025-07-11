@@ -1,0 +1,16 @@
+2025-07-11 11:31:14,141 - trading_system - INFO - Logging system initialized
+2025-07-11 11:31:14,141 - trading_system - INFO - Log file: logs/trading_system_20250711_113114.log
+2025-07-11 11:31:14,142 - trading_system - INFO - Log level: INFO
+2025-07-11 11:31:14,147 - trading_system - INFO - Initializing enhanced trading system...
+2025-07-11 11:31:14,149 - services.kite_mcp_client - ERROR - Error testing MCP connection: Cannot connect to host localhost:8080 ssl:default [Connect call failed ('127.0.0.1', 8080)]
+2025-07-11 11:31:14,149 - services.kite_mcp_client - INFO - Using mock MCP connection for development
+2025-07-11 11:31:14,150 - services.kite_mcp_client - INFO - Kite MCP client initialized successfully
+2025-07-11 11:31:14,150 - trading_system - INFO - Enhanced trading system initialized successfully
+2025-07-11 11:31:14,173 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.128.142:5000
+2025-07-11 11:31:14,173 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-07-11 11:31:14,174 - werkzeug - INFO -  * Restarting with stat
+2025-07-11 11:31:47,681 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f17bdd67210>
