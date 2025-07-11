@@ -1,26 +1,44 @@
-# Multi-Agent Algorithmic Trading System MVP
+# Enhanced Multi-Agent Algorithmic Trading System
 
 ## Overview
 
-This is a sophisticated multi-agent algorithmic trading system that integrates with Kite Connect 3 API through an MCP (Model Context Protocol) server. The system uses LangChain and LangGraph frameworks to orchestrate multiple specialized agents that work together to analyze market data, generate trading signals, and manage risk.
+This is a sophisticated 7-agent algorithmic trading system based on the TauricResearch/TradingAgents architecture. The system integrates with Kite Connect 3 API through an MCP (Model Context Protocol) server and uses LangChain and LangGraph frameworks to orchestrate multiple specialized agents that work together to analyze market data, generate trading signals, and manage risk through a structured 5-stage workflow.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
-## System Architecture
+## Enhanced System Architecture
 
 ### Core Framework
-- **LangChain & LangGraph**: The system is built on LangChain for individual agent implementation and LangGraph for orchestrating multi-agent workflows
-- **Multi-Agent Pattern**: Follows the TauricResearch/TradingAgents repository design principles with clear separation of concerns
+- **TauricResearch/TradingAgents Architecture**: Based on the award-winning research framework achieving 30.5% annualized returns
+- **LangChain & LangGraph**: Individual agent implementation and multi-agent workflow orchestration
+- **7-Agent System**: Specialized agents with distinct roles and expertise areas
+- **5-Stage Workflow**: Sequential and parallel processing for optimal efficiency
 - **Asynchronous Processing**: Uses Python's asyncio for handling concurrent operations and API calls
 
-### Agent Architecture
-The system implements a sequential multi-agent workflow:
+### Enhanced Agent Architecture
+The system implements a sophisticated 5-stage workflow with 7 specialized agents:
+
+#### Stage I: Analyst Team (5 agents in parallel)
 1. **Market Data Agent** → fetches live and historical market data
-2. **Technical Analysis Agent** → calculates technical indicators
-3. **Signal Generation Agent** → generates trading signals using LLM analysis
-4. **Risk Assessment Agent** → evaluates position sizing and risk management
+2. **Technical Analysis Agent** → calculates technical indicators and patterns
+3. **Fundamentals Analyst** → evaluates company financials and metrics
+4. **Sentiment Analyst** → analyzes market sentiment from news and social media
+5. **News Analyst** → monitors and analyzes news events and market catalysts
+
+#### Stage II: Research Team (2 agents in parallel)
+6. **Bull Researcher** → advocates for bullish positions and identifies opportunities
+7. **Bear Researcher** → advocates for bearish positions and identifies risks
+
+#### Stage III: Signal Generation
+- **Signal Generation Agent** → generates trading signals using comprehensive analysis
+
+#### Stage IV: Risk Management
+- **Risk Assessment Agent** → evaluates position sizing and risk management
+
+#### Stage V: Portfolio Management
+- **Portfolio Manager** → makes final trading decisions based on all analysis
 
 ### State Management
 - **Shared State**: All agents work with a common `TradingState` TypedDict for seamless data sharing

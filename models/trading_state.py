@@ -22,11 +22,23 @@ class TradingState(TypedDict):
     technical_indicators: Optional[Dict[str, Any]]
     technical_analysis: Optional[Dict[str, Any]]
     
+    # Enhanced analyst team outputs (TauricResearch architecture)
+    fundamentals_analysis: Optional[Dict[str, Any]]
+    sentiment_analysis: Optional[Dict[str, Any]]
+    news_analysis: Optional[Dict[str, Any]]
+    
+    # Research team outputs (Bull vs Bear)
+    bull_research: Optional[Dict[str, Any]]
+    bear_research: Optional[Dict[str, Any]]
+    
     # Trading signals
     trading_signals: Optional[Dict[str, Any]]
     
     # Risk assessment
     risk_assessment: Optional[Dict[str, Any]]
+    
+    # Portfolio management decision
+    portfolio_decision: Optional[Dict[str, Any]]
     
     # Execution results
     execution_result: Optional[Dict[str, Any]]
