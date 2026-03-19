@@ -1,6 +1,8 @@
 """
-News Analyst Agent - Monitors and analyzes news events and market catalysts
-Based on TauricResearch/TradingAgents architecture
+News Analyst — Monitors and analyzes news events and market catalysts.
+
+Scans news feeds and evaluates potential market impact from earnings reports,
+regulatory changes, analyst ratings, and sector developments.
 """
 
 import logging

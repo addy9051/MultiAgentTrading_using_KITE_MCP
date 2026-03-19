@@ -1,7 +1,7 @@
 [project]
-name = "repl-nix-workspace"
-version = "0.1.0"
-description = "Add your description here"
+name = "multi-agent-kite-trader"
+version = "0.2.0"
+description = "Multi-agent algorithmic trading system with debate-driven analysis and Zerodha KITE MCP integration"
 requires-python = ">=3.11"
 dependencies = [
     "aiohttp>=3.12.14",

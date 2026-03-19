@@ -1,258 +1,138 @@
 """
-Trading Orchestrator - Coordinates all trading agents using LangGraph
+Trading Orchestrator — Thin wrapper around the LangGraph agent graph.
+
+Initializes the system components (KITE MCP client, agent graph) and
+provides a simple `run_trading_cycle()` interface that invokes the
+compiled graph with an initial state.
 """
 
+import asyncio
 import logging
-from typing import Dict, Any, List
-from langgraph.graph import StateGraph, END, START
-from agents.market_data_agent import MarketDataAgent
-from agents.technical_analysis_agent import TechnicalAnalysisAgent
-from agents.signal_generation_agent import SignalGenerationAgent
-from agents.risk_assessment_agent import RiskAssessmentAgent
+from datetime import datetime
+from typing import Dict, Any, Optional
+
+from config.settings import Settings
+from graph.agent_graph import build_trading_graph
 from services.kite_mcp_client import KiteMCPClient
-from models.trading_state import TradingState
 
 logger = logging.getLogger(__name__)
 
+
 class TradingOrchestrator:
-    """Main orchestrator for the multi-agent trading system"""
-    
-    def __init__(self, settings):
+    """
+    High-level orchestrator that wraps the LangGraph trading pipeline.
+
+    Usage:
+        orchestrator = TradingOrchestrator(settings)
+        await orchestrator.initialize()
+        result = await orchestrator.run_trading_cycle()
+    """
+
+    def __init__(self, settings: Settings):
         self.settings = settings
-        self.kite_client = KiteMCPClient(settings)
-        
-        # Initialize agents
-        self.market_data_agent = MarketDataAgent(settings, self.kite_client)
-        self.technical_analysis_agent = TechnicalAnalysisAgent(settings)
-        self.signal_generation_agent = SignalGenerationAgent(settings)
-        self.risk_assessment_agent = RiskAssessmentAgent(settings)
-        
-        # Initialize workflow
-        self.workflow = None
-        self.compiled_workflow = None
-    
-    async def initialize(self):
-        """Initialize the trading orchestrator"""
+        self.kite_client: Optional[KiteMCPClient] = None
+        self.graph = None
+        self._initialized = False
+
+    async def initialize(self) -> None:
+        """Initialize KITE MCP client and compile the agent graph."""
+        if self._initialized:
+            return
+
+        logger.info("Initializing trading orchestrator...")
+
+        # Set up KITE MCP client
+        self.kite_client = KiteMCPClient(self.settings)
+        await self.kite_client.connect()
+
+        # Build and compile the agent graph
+        self.graph = build_trading_graph(self.settings, self.kite_client)
+
+        self._initialized = True
+        logger.info("Trading orchestrator initialized — graph compiled with debate & risk panel loops")
+
+    async def run_trading_cycle(self, symbol: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Run a single trading analysis cycle.
+
+        Args:
+            symbol: Optional override for the target symbol
+
+        Returns:
+            Final state dictionary with all analysis results
+        """
+        if not self._initialized:
+            await self.initialize()
+
+        target_symbol = symbol or self.settings.TARGET_SYMBOL
+        cycle_id = f"cycle_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
+        logger.info(f"Starting trading cycle {cycle_id} for {target_symbol}")
+
+        # Build initial state
+        initial_state = {
+            "symbol": target_symbol,
+            "timestamp": datetime.now().isoformat(),
+            "cycle_id": cycle_id,
+            "messages": [],
+            "debate_history": [],
+            "debate_round": 0,
+            "risk_discussion_history": [],
+            "risk_discussion_round": 0,
+            "market_data": None,
+            "market_analysis": None,
+            "technical_indicators": None,
+            "technical_analysis": None,
+            "fundamentals_analysis": None,
+            "sentiment_analysis": None,
+            "news_analysis": None,
+            "bull_research": None,
+            "bear_research": None,
+            "research_verdict": None,
+            "trade_proposal": None,
+            "risk_verdict": None,
+            "portfolio_decision": None,
+            "execution_result": None,
+            "error": None,
+            "metadata": {
+                "max_debate_rounds": self.settings.MAX_DEBATE_ROUNDS,
+                "max_risk_discussion_rounds": self.settings.MAX_RISK_DISCUSSION_ROUNDS,
+                "simulation_mode": self.settings.SIMULATION_MODE,
+            },
+        }
+
         try:
-            # Initialize MCP client
-            await self.kite_client.initialize()
-            
-            # Create the workflow
-            self.create_workflow()
-            
-            logger.info("Trading orchestrator initialized successfully")
-            
+            # Invoke the graph
+            final_state = await self.graph.ainvoke(initial_state)
+
+            logger.info(f"Trading cycle {cycle_id} completed")
+            self._log_summary(final_state)
+            return final_state
+
         except Exception as e:
-            logger.error(f"Failed to initialize trading orchestrator: {str(e)}")
-            raise
-    
-    def create_workflow(self):
-        """Create the LangGraph workflow"""
-        try:
-            # Create StateGraph
-            self.workflow = StateGraph(TradingState)
-            
-            # Add agent nodes
-            self.workflow.add_node("market_data", self.market_data_node)
-            self.workflow.add_node("technical_analysis", self.technical_analysis_node)
-            self.workflow.add_node("signal_generation", self.signal_generation_node)
-            self.workflow.add_node("risk_assessment", self.risk_assessment_node)
-            self.workflow.add_node("trade_execution", self.trade_execution_node)
-            
-            # Define workflow edges
-            self.workflow.add_edge(START, "market_data")
-            self.workflow.add_edge("market_data", "technical_analysis")
-            self.workflow.add_edge("technical_analysis", "signal_generation")
-            self.workflow.add_edge("signal_generation", "risk_assessment")
-            self.workflow.add_edge("risk_assessment", "trade_execution")
-            self.workflow.add_edge("trade_execution", END)
-            
-            # Compile the workflow
-            self.compiled_workflow = self.workflow.compile()
-            
-            logger.info("Trading workflow created successfully")
-            
-        except Exception as e:
-            logger.error(f"Error creating workflow: {str(e)}")
-            raise
-    
-    async def market_data_node(self, state: TradingState) -> TradingState:
-        """Market data processing node"""
-        try:
-            logger.info("Processing market data...")
-            updated_state = await self.market_data_agent.process_market_data(state)
-            return {**state, **updated_state}
-            
-        except Exception as e:
-            logger.error(f"Error in market data node: {str(e)}")
-            return {**state, "error": str(e)}
-    
-    async def technical_analysis_node(self, state: TradingState) -> TradingState:
-        """Technical analysis processing node"""
-        try:
-            logger.info("Processing technical analysis...")
-            updated_state = await self.technical_analysis_agent.process_technical_analysis(state)
-            return {**state, **updated_state}
-            
-        except Exception as e:
-            logger.error(f"Error in technical analysis node: {str(e)}")
-            return {**state, "error": str(e)}
-    
-    async def signal_generation_node(self, state: TradingState) -> TradingState:
-        """Signal generation processing node"""
-        try:
-            logger.info("Processing signal generation...")
-            updated_state = await self.signal_generation_agent.process_signal_generation(state)
-            return {**state, **updated_state}
-            
-        except Exception as e:
-            logger.error(f"Error in signal generation node: {str(e)}")
-            return {**state, "error": str(e)}
-    
-    async def risk_assessment_node(self, state: TradingState) -> TradingState:
-        """Risk assessment processing node"""
-        try:
-            logger.info("Processing risk assessment...")
-            updated_state = await self.risk_assessment_agent.process_risk_assessment(state)
-            return {**state, **updated_state}
-            
-        except Exception as e:
-            logger.error(f"Error in risk assessment node: {str(e)}")
-            return {**state, "error": str(e)}
-    
-    async def trade_execution_node(self, state: TradingState) -> TradingState:
-        """Trade execution processing node"""
-        try:
-            logger.info("Processing trade execution...")
-            
-            # Get final trading decision
-            risk_assessment = state.get("risk_assessment", {})
-            trading_signals = state.get("trading_signals", {})
-            
-            approval = risk_assessment.get("final_approval", "rejected")
-            signal = trading_signals.get("final_signal", "HOLD")
-            
-            execution_result = {
-                "executed": False,
-                "order_id": None,
-                "execution_price": 0,
-                "execution_quantity": 0,
-                "execution_status": "NOT_EXECUTED"
+            logger.error(f"Trading cycle {cycle_id} failed: {e}")
+            return {
+                **initial_state,
+                "error": str(e),
+                "messages": initial_state["messages"] + [f"SYSTEM ERROR: {e}"],
             }
-            
-            if approval == "approved" and signal in ["BUY", "SELL"]:
-                # Prepare order data
-                market_data = state.get("market_data", {})
-                position_sizing = risk_assessment.get("position_sizing", {})
-                
-                order_data = {
-                    "symbol": market_data.get("symbol", self.settings.TARGET_SYMBOL),
-                    "exchange": self.settings.EXCHANGE,
-                    "transaction_type": signal,
-                    "quantity": position_sizing.get("shares", 1),
-                    "price": market_data.get("current_price", 0),
-                    "order_type": "MARKET",
-                    "product": "CNC"
-                }
-                
-                # Execute order (simulation)
-                order_result = await self.kite_client.place_order(order_data)
-                
-                execution_result = {
-                    "executed": True,
-                    "order_id": order_result.get("order_id", "MOCK_ORDER"),
-                    "execution_price": order_data["price"],
-                    "execution_quantity": order_data["quantity"],
-                    "execution_status": "COMPLETED_SIMULATION",
-                    "order_data": order_data
-                }
-                
-                logger.info(f"Order executed (simulation): {signal} {order_data['quantity']} shares at {order_data['price']}")
-            
-            else:
-                logger.info(f"Trade not executed - Approval: {approval}, Signal: {signal}")
-            
-            updated_state = {
-                "execution_result": execution_result,
-                "messages": state.get("messages", []) + [
-                    f"Trade Execution: {execution_result['execution_status']}",
-                    f"Signal: {signal}, Approval: {approval}"
-                ]
-            }
-            
-            return {**state, **updated_state}
-            
-        except Exception as e:
-            logger.error(f"Error in trade execution node: {str(e)}")
-            return {**state, "error": str(e)}
-    
-    async def run_trading_cycle(self) -> Dict[str, Any]:
-        """Run a complete trading cycle"""
-        try:
-            logger.info("Starting trading cycle...")
-            
-            # Initialize state
-            initial_state = {
-                "symbol": self.settings.TARGET_SYMBOL,
-                "messages": [f"Starting trading analysis for {self.settings.TARGET_SYMBOL}"],
-                "timestamp": "",
-                "cycle_id": "cycle_001"
-            }
-            
-            # Run the workflow
-            result = await self.compiled_workflow.ainvoke(initial_state)
-            
-            # Log final results
-            self.log_trading_results(result)
-            
-            logger.info("Trading cycle completed successfully")
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error in trading cycle: {str(e)}")
-            raise
-        
-        finally:
-            # Clean up
-            await self.kite_client.close()
-    
-    def log_trading_results(self, result: Dict[str, Any]):
-        """Log the final trading results"""
-        try:
-            logger.info("=== TRADING CYCLE RESULTS ===")
-            
-            # Market data summary
-            market_data = result.get("market_data", {})
-            logger.info(f"Symbol: {market_data.get('symbol', 'N/A')}")
-            logger.info(f"Current Price: {market_data.get('current_price', 'N/A')}")
-            logger.info(f"Volume: {market_data.get('volume', 'N/A')}")
-            
-            # Technical analysis summary
-            technical_analysis = result.get("technical_analysis", {})
-            logger.info(f"Trend: {technical_analysis.get('trend_direction', 'N/A')}")
-            logger.info(f"RSI: {result.get('technical_indicators', {}).get('rsi', 'N/A')}")
-            
-            # Trading signals
-            trading_signals = result.get("trading_signals", {})
-            logger.info(f"Final Signal: {trading_signals.get('final_signal', 'N/A')}")
-            logger.info(f"Confidence: {trading_signals.get('confidence', 'N/A')}%")
-            
-            # Risk assessment
-            risk_assessment = result.get("risk_assessment", {})
-            logger.info(f"Risk Level: {risk_assessment.get('comprehensive_analysis', {}).get('risk_level', 'N/A')}")
-            logger.info(f"Trade Approval: {risk_assessment.get('final_approval', 'N/A')}")
-            
-            # Execution results
-            execution_result = result.get("execution_result", {})
-            logger.info(f"Executed: {execution_result.get('executed', False)}")
-            logger.info(f"Order ID: {execution_result.get('order_id', 'N/A')}")
-            
-            # All messages
-            logger.info("=== AGENT MESSAGES ===")
-            for message in result.get("messages", []):
-                logger.info(f"  {message}")
-            
-            logger.info("=== END RESULTS ===")
-            
-        except Exception as e:
-            logger.error(f"Error logging trading results: {str(e)}")
+
+    def _log_summary(self, state: Dict[str, Any]) -> None:
+        """Log a brief summary of the trading cycle outcome."""
+        decision = state.get("portfolio_decision", {})
+        execution = state.get("execution_result", {})
+        verdict = state.get("research_verdict", {})
+        risk = state.get("risk_verdict", {})
+
+        logger.info("=" * 60)
+        logger.info("TRADING CYCLE SUMMARY")
+        logger.info("-" * 60)
+        logger.info(f"Symbol: {state.get('symbol')}")
+        logger.info(f"Research Verdict: {verdict.get('winning_side', '?')} / {verdict.get('recommendation', '?')}")
+        logger.info(f"Risk Verdict: {'APPROVED' if risk.get('approved') else 'REJECTED'} ({risk.get('risk_level', '?')})")
+        logger.info(f"Final Action: {decision.get('final_action', 'HOLD')}")
+        logger.info(f"Execution: {execution.get('execution_status', 'N/A')}")
+        logger.info(f"Debate rounds: {state.get('debate_round', 0)}")
+        logger.info(f"Risk discussion rounds: {state.get('risk_discussion_round', 0)}")
+        logger.info(f"Total messages: {len(state.get('messages', []))}")
+        logger.info("=" * 60)

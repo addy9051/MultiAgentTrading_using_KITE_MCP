@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-Multi-Agent Algorithmic Trading System MVP
-Main entry point for the trading system
+Multi-Agent Kite Trading System — Main entry point.
+
+Runs a single trading analysis cycle through the LangGraph agent pipeline,
+including bull/bear debate and risk panel discussion.
 """
 
 import asyncio
@@ -10,34 +12,32 @@ from config.settings import Settings
 from services.trading_orchestrator import TradingOrchestrator
 from utils.logging_config import setup_logging
 
+
 async def main():
-    """Main function to run the multi-agent trading system"""
-    
-    # Setup logging
+    """Run one trading cycle."""
     setup_logging()
     logger = logging.getLogger(__name__)
-    
+
     try:
-        # Initialize settings
         settings = Settings()
-        logger.info("Starting Multi-Agent Trading System MVP")
-        logger.info(f"Target Symbol: {settings.TARGET_SYMBOL}")
-        logger.info(f"MCP Server URL: {settings.KITE_MCP_URL}")
-        
-        # Create and run trading orchestrator
+        logger.info("Starting Multi-Agent Kite Trading System")
+        logger.info(f"Target: {settings.TARGET_SYMBOL} | Mode: {'SIMULATION' if settings.SIMULATION_MODE else 'LIVE'}")
+        logger.info(f"Debate rounds: {settings.MAX_DEBATE_ROUNDS} | Risk rounds: {settings.MAX_RISK_DISCUSSION_ROUNDS}")
+
         orchestrator = TradingOrchestrator(settings)
-        
-        # Initialize the system
         await orchestrator.initialize()
-        
-        # Run trading cycle
-        await orchestrator.run_trading_cycle()
-        
-        logger.info("Trading system completed successfully")
-        
+
+        result = await orchestrator.run_trading_cycle()
+
+        # Print key results
+        decision = result.get("portfolio_decision", {})
+        logger.info(f"Final Action: {decision.get('final_action', 'HOLD')}")
+        logger.info(f"Rationale: {decision.get('rationale', 'N/A')[:200]}")
+
     except Exception as e:
-        logger.error(f"Error in main execution: {str(e)}")
+        logger.error(f"Fatal error: {e}")
         raise
+
 
 if __name__ == "__main__":
     asyncio.run(main())

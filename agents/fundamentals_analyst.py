@@ -1,6 +1,8 @@
 """
-Fundamentals Analyst Agent - Evaluates company financials, earnings, and market metrics
-Based on TauricResearch/TradingAgents architecture
+Fundamentals Analyst — Evaluates company financials, earnings, and market metrics.
+
+Performs deep-dive analysis of balance sheets, income statements, and valuation
+ratios to assess intrinsic value and fundamental strength.
 """
 
 import logging

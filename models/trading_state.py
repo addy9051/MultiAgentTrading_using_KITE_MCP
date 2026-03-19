@@ -1,56 +1,79 @@
 """
-Trading State - Defines the state structure for the multi-agent system
+Trading State — Defines the shared state structure for the multi-agent trading pipeline.
+
+This state flows through the LangGraph StateGraph and is read/written by every agent node.
+It tracks market data, analysis outputs, debate histories, risk discussions, and final decisions.
 """
 
-from typing import Dict, Any, List, Optional, TypedDict
+from typing import Dict, Any, List, Optional, TypedDict, Sequence
 from typing_extensions import Annotated
+import operator
+
+
+def _merge_messages(left: List[str], right: List[str]) -> List[str]:
+    """Custom reducer that appends new messages to the existing list."""
+    return left + right
+
+
+def _merge_debate(left: List[Dict[str, Any]], right: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Custom reducer for debate history — appends new rounds."""
+    return left + right
+
 
 class TradingState(TypedDict):
-    """State structure for the trading system"""
-    
-    # Basic information
+    """
+    Central state shared across all agent nodes in the trading graph.
+
+    Groups:
+    - Identification: symbol, timestamps, cycle tracking
+    - Market intelligence: raw data + analyst outputs
+    - Debate arena: bull/bear debate history + research verdict
+    - Risk panel: risk discussion history + risk verdict
+    - Decision: trade proposal, portfolio decision, execution result
+    - Meta: messages log, errors, metadata
+    """
+
+    # ── Identification ──────────────────────────────────────────────
     symbol: str
     timestamp: str
     cycle_id: str
-    messages: Annotated[List[str], "List of messages from agents"]
-    
-    # Market data
+
+    # ── Market Intelligence ─────────────────────────────────────────
     market_data: Optional[Dict[str, Any]]
     market_analysis: Optional[Dict[str, Any]]
-    
-    # Technical analysis
     technical_indicators: Optional[Dict[str, Any]]
     technical_analysis: Optional[Dict[str, Any]]
-    
-    # Enhanced analyst team outputs (TauricResearch architecture)
     fundamentals_analysis: Optional[Dict[str, Any]]
     sentiment_analysis: Optional[Dict[str, Any]]
     news_analysis: Optional[Dict[str, Any]]
-    
-    # Research team outputs (Bull vs Bear)
+
+    # ── Debate Arena (Bull vs Bear) ─────────────────────────────────
     bull_research: Optional[Dict[str, Any]]
     bear_research: Optional[Dict[str, Any]]
-    
-    # Trading signals
-    trading_signals: Optional[Dict[str, Any]]
-    
-    # Risk assessment
-    risk_assessment: Optional[Dict[str, Any]]
-    
-    # Portfolio management decision
+    debate_history: Annotated[List[Dict[str, Any]], _merge_debate]
+    debate_round: int
+    research_verdict: Optional[Dict[str, Any]]
+
+    # ── Risk Panel Discussion ───────────────────────────────────────
+    risk_discussion_history: Annotated[List[Dict[str, Any]], _merge_debate]
+    risk_discussion_round: int
+    risk_verdict: Optional[Dict[str, Any]]
+
+    # ── Trade Decision Pipeline ─────────────────────────────────────
+    trade_proposal: Optional[Dict[str, Any]]
     portfolio_decision: Optional[Dict[str, Any]]
-    
-    # Execution results
     execution_result: Optional[Dict[str, Any]]
-    
-    # Error handling
+
+    # ── Meta ────────────────────────────────────────────────────────
+    messages: Annotated[List[str], _merge_messages]
     error: Optional[str]
-    
-    # Additional metadata
     metadata: Optional[Dict[str, Any]]
 
+
+# ── Convenience sub-schemas for documentation / validation ──────────
+
 class MarketData(TypedDict):
-    """Market data structure"""
+    """Raw market data snapshot."""
     symbol: str
     current_price: float
     volume: int
@@ -61,8 +84,9 @@ class MarketData(TypedDict):
     historical_data: List[Dict[str, Any]]
     timestamp: str
 
+
 class TechnicalIndicators(TypedDict):
-    """Technical indicators structure"""
+    """Computed technical indicator values."""
     rsi: Optional[float]
     sma_20: Optional[float]
     sma_50: Optional[float]
@@ -74,35 +98,51 @@ class TechnicalIndicators(TypedDict):
     atr: Optional[float]
     volume_sma: Optional[float]
 
-class TradingSignal(TypedDict):
-    """Trading signal structure"""
-    primary_signal: str  # BUY, SELL, HOLD
-    confidence: float  # 0-100
-    signal_strength: str  # strong, moderate, weak
+
+class DebateEntry(TypedDict):
+    """Single round in the bull/bear debate."""
+    round: int
+    speaker: str          # "bull" | "bear"
+    argument: str
+    counter_to: Optional[str]
+    confidence: float
+
+
+class RiskDiscussionEntry(TypedDict):
+    """Single contribution in the risk panel discussion."""
+    round: int
+    speaker: str          # "hawk" | "owl" | "dove"
+    position: str
+    reasoning: str
+    recommended_action: str
+
+
+class TradeProposal(TypedDict):
+    """Trade proposal produced by the Trade Strategist."""
+    action: str           # BUY | SELL | HOLD
+    confidence: float
     entry_price: float
     stop_loss: float
     take_profit: float
-    position_size: float
-    time_horizon: str  # short, medium, long
-    risk_level: str  # low, medium, high
+    position_size_pct: float
+    time_horizon: str
     reasoning: str
     supporting_factors: List[str]
     risk_factors: List[str]
 
-class RiskAssessment(TypedDict):
-    """Risk assessment structure"""
-    overall_risk_score: float  # 0-100
-    risk_level: str  # low, medium, high, extreme
-    recommended_position_size: float
-    max_acceptable_loss: float
-    stop_loss_recommendation: float
-    risk_factors: List[str]
-    mitigation_strategies: List[str]
-    trade_approval: str  # approved, conditional, rejected
-    approval_reason: str
+
+class RiskVerdict(TypedDict):
+    """Final ruling from the Risk Arbiter."""
+    approved: bool
+    risk_level: str
+    adjusted_position_size: float
+    adjusted_stop_loss: float
+    reasoning: str
+    dissenting_views: List[str]
+
 
 class ExecutionResult(TypedDict):
-    """Execution result structure"""
+    """Order execution outcome."""
     executed: bool
     order_id: Optional[str]
     execution_price: float

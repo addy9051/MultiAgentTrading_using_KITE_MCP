@@ -1,6 +1,8 @@
 """
-Sentiment Analyst Agent - Analyzes market sentiment from news and social media
-Based on TauricResearch/TradingAgents architecture
+Sentiment Analyst — Analyzes market sentiment from news and social media.
+
+Gauges investor mood by examining social media buzz, news sentiment,
+and market psychology indicators to provide sentiment-based trading signals.
 """
 
 import logging

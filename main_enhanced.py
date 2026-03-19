@@ -1,158 +1,102 @@
+#!/usr/bin/env python3
 """
-Enhanced Multi-Agent Algorithmic Trading System
-Main entry point implementing TauricResearch/TradingAgents architecture
+Multi-Agent Kite Trading System — Enhanced entry point with detailed output.
+
+Runs a trading cycle and displays a rich summary of all agent outputs,
+debate results, risk panel discussion, and final execution.
 """
 
 import asyncio
 import logging
-from datetime import datetime
 from config.settings import Settings
-from services.enhanced_trading_orchestrator import EnhancedTradingOrchestrator
-from services.kite_mcp_client import KiteMCPClient
+from services.trading_orchestrator import TradingOrchestrator
 from utils.logging_config import setup_logging
 
-# Setup logging
-logger = setup_logging()
 
 async def main():
-    """Main function to run the enhanced multi-agent trading system"""
+    """Run a trading cycle with detailed console output."""
+    setup_logging()
+    logger = logging.getLogger(__name__)
+
     try:
-        logger.info("=== ENHANCED MULTI-AGENT TRADING SYSTEM STARTING ===")
-        logger.info("Architecture: TauricResearch/TradingAgents - 7 Agent System")
-        logger.info("Framework: LangChain + LangGraph")
-        logger.info("Stages: 5-Stage Workflow (Analysts → Research → Signals → Risk → Portfolio)")
-        
-        # Load settings
         settings = Settings()
-        logger.info(f"Target Symbol: {settings.TARGET_SYMBOL}")
-        logger.info(f"Simulation Mode: {settings.SIMULATION_MODE}")
-        logger.info(f"Using OpenAI API: {bool(settings.OPENAI_API_KEY)}")
-        
-        # Initialize Kite MCP client
-        kite_client = KiteMCPClient(settings)
-        
-        # Initialize connection (will use sample data if no API keys)
-        await kite_client.initialize()
-        
-        # Create enhanced orchestrator
-        orchestrator = EnhancedTradingOrchestrator(settings, kite_client)
-        
-        # Run enhanced trading cycle
-        logger.info("Starting enhanced trading cycle...")
+        logger.info("=== MULTI-AGENT KITE TRADING SYSTEM ===")
+        logger.info(f"Target: {settings.TARGET_SYMBOL} | Mode: {'SIMULATION' if settings.SIMULATION_MODE else 'LIVE'}")
+        logger.info(f"Debate Rounds: {settings.MAX_DEBATE_ROUNDS} | Risk Rounds: {settings.MAX_RISK_DISCUSSION_ROUNDS}")
+
+        orchestrator = TradingOrchestrator(settings)
+        await orchestrator.initialize()
+
         results = await orchestrator.run_trading_cycle()
-        
-        # Display final summary
-        logger.info("=== ENHANCED TRADING SYSTEM SUMMARY ===")
-        
-        # Extract key results
+
+        # ── Display summary ─────────────────────────────────────
         symbol = results.get("symbol", "UNKNOWN")
-        portfolio_decision = results.get("portfolio_decision", {})
-        bull_research = results.get("bull_research", {})
-        bear_research = results.get("bear_research", {})
+        market_data = results.get("market_data", {})
         fundamentals = results.get("fundamentals_analysis", {})
         sentiment = results.get("sentiment_analysis", {})
         news = results.get("news_analysis", {})
-        
-        print(f"\n{'='*60}")
-        print(f"ENHANCED TRADING SYSTEM RESULTS FOR {symbol}")
-        print(f"{'='*60}")
-        
-        # Market overview
-        market_data = results.get("market_data", {})
-        if market_data:
-            print(f"Current Price: ${market_data.get('current_price', 0):.2f}")
-            print(f"Volume: {market_data.get('volume', 0):,}")
-            print(f"Market Trend: {market_data.get('trend', 'unknown')}")
-        
-        print(f"\n{'='*60}")
-        print("ANALYST TEAM RESULTS")
-        print(f"{'='*60}")
-        
-        # Fundamentals
-        if fundamentals:
-            print(f"📊 Fundamentals: {fundamentals.get('financial_health', 'unknown')}")
-            print(f"   Valuation: {fundamentals.get('valuation_assessment', 'unknown')}")
-            print(f"   Price Target: ${fundamentals.get('price_target', 0):.2f}")
-            print(f"   Recommendation: {fundamentals.get('recommendation', 'HOLD')}")
-        
-        # Sentiment
-        if sentiment:
-            print(f"🗣️  Sentiment: {sentiment.get('overall_sentiment', 'neutral')}")
-            print(f"   Score: {sentiment.get('sentiment_score', 0.5):.2f}")
-            print(f"   Social Buzz: {sentiment.get('social_media_buzz', 'medium')}")
-        
-        # News
-        if news:
-            print(f"📰 News: {news.get('overall_news_sentiment', 'neutral')}")
-            print(f"   Impact: {news.get('market_moving_potential', 'medium')}")
-            print(f"   Recommendation: {news.get('trading_recommendation', 'hold')}")
-        
-        print(f"\n{'='*60}")
-        print("RESEARCH TEAM DEBATE")
-        print(f"{'='*60}")
-        
-        # Bull vs Bear
-        if bull_research:
-            print(f"🐂 BULL CASE:")
-            print(f"   Thesis: {bull_research.get('bullish_thesis', 'N/A')[:100]}...")
-            print(f"   Upside: {bull_research.get('upside_potential', 'unknown')}")
-            print(f"   Action: {bull_research.get('recommended_action', 'WAIT')}")
-            print(f"   Confidence: {bull_research.get('confidence_level', 0)}%")
-        
-        if bear_research:
-            print(f"🐻 BEAR CASE:")
-            print(f"   Thesis: {bear_research.get('bearish_thesis', 'N/A')[:100]}...")
-            print(f"   Downside: {bear_research.get('downside_potential', 'unknown')}")
-            print(f"   Action: {bear_research.get('recommended_action', 'AVOID')}")
-            print(f"   Confidence: {bear_research.get('confidence_level', 0)}%")
-        
-        print(f"\n{'='*60}")
-        print("FINAL PORTFOLIO DECISION")
-        print(f"{'='*60}")
-        
-        # Portfolio manager decision
-        if portfolio_decision:
-            print(f"🎯 DECISION: {portfolio_decision.get('final_decision', 'UNKNOWN')}")
-            print(f"   Position Size: {portfolio_decision.get('position_size', '0%')}")
-            print(f"   Entry Price: ${portfolio_decision.get('entry_price', 0):.2f}")
-            print(f"   Stop Loss: ${portfolio_decision.get('stop_loss', 0):.2f}")
-            print(f"   Take Profit: ${portfolio_decision.get('take_profit', 0):.2f}")
-            print(f"   Risk-Reward: {portfolio_decision.get('risk_reward_ratio', 0):.2f}")
-            print(f"   Confidence: {portfolio_decision.get('confidence_level', 0)}%")
-            print(f"   Rationale: {portfolio_decision.get('decision_rationale', 'N/A')[:150]}...")
-        
-        # Risk assessment
-        risk = results.get("risk_assessment", {})
-        if risk:
-            print(f"⚠️  Risk Level: {risk.get('risk_level', 'unknown')}")
-            print(f"   Trade Approval: {risk.get('trade_approval', 'unknown')}")
-        
-        # Execution
+        bull = results.get("bull_research", {})
+        bear = results.get("bear_research", {})
+        verdict = results.get("research_verdict", {})
+        proposal = results.get("trade_proposal", {})
+        risk_verdict = results.get("risk_verdict", {})
+        decision = results.get("portfolio_decision", {})
         execution = results.get("execution_result", {})
+
+        print(f"\n{'='*60}")
+        print(f"  TRADING RESULTS — {symbol}")
+        print(f"{'='*60}")
+
+        if market_data:
+            print(f"\n📈 Market: ₹{market_data.get('current_price', 0):.2f} | Vol: {market_data.get('volume', 0):,}")
+
+        print(f"\n{'─'*60}")
+        print("  ANALYST PANEL")
+        print(f"{'─'*60}")
+        if fundamentals:
+            print(f"  📊 Fundamentals: {fundamentals.get('financial_health', '?')} | {fundamentals.get('valuation_assessment', '?')}")
+        if sentiment:
+            print(f"  🗣️  Sentiment: {sentiment.get('overall_sentiment', '?')} ({sentiment.get('sentiment_score', 0):.2f})")
+        if news:
+            print(f"  📰 News: {news.get('overall_news_sentiment', '?')} | Impact: {news.get('market_moving_potential', '?')}")
+
+        print(f"\n{'─'*60}")
+        print("  RESEARCH DEBATE")
+        print(f"{'─'*60}")
+        if bull:
+            print(f"  🐂 Bull: {bull.get('bullish_thesis', '?')[:80]}...")
+            print(f"     Upside: {bull.get('upside_potential', '?')} | Confidence: {bull.get('confidence_level', 0)}%")
+        if bear:
+            print(f"  🐻 Bear: {bear.get('bearish_thesis', '?')[:80]}...")
+            print(f"     Downside: {bear.get('downside_potential', '?')} | Confidence: {bear.get('confidence_level', 0)}%")
+        if verdict:
+            print(f"  ⚖️  Verdict: {verdict.get('winning_side', '?')} → {verdict.get('recommendation', '?')} ({verdict.get('confidence', 0)}%)")
+
+        print(f"\n{'─'*60}")
+        print("  RISK PANEL")
+        print(f"{'─'*60}")
+        if risk_verdict:
+            status = "✅ APPROVED" if risk_verdict.get("approved") else "❌ REJECTED"
+            print(f"  {status} | Risk: {risk_verdict.get('risk_level', '?')}")
+            print(f"  Size: {risk_verdict.get('adjusted_position_size_pct', 0)}% | SL: {risk_verdict.get('adjusted_stop_loss_pct', 0)}%")
+
+        print(f"\n{'─'*60}")
+        print("  FINAL DECISION")
+        print(f"{'─'*60}")
+        if decision:
+            print(f"  🎯 {decision.get('final_action', 'HOLD')} — {decision.get('rationale', '')[:120]}")
         if execution:
-            print(f"🚀 Execution: {'SUCCESS' if execution.get('executed', False) else 'SIMULATION'}")
-            print(f"   Order ID: {execution.get('order_id', 'N/A')}")
-        
-        print(f"\n{'='*60}")
-        print("SYSTEM PERFORMANCE")
-        print(f"{'='*60}")
-        
-        print(f"✅ 7-Agent System: Complete")
-        print(f"✅ 5-Stage Workflow: Executed")
-        print(f"✅ Bull vs Bear Debate: Conducted")
-        print(f"✅ Risk Management: Applied")
-        print(f"✅ Portfolio Decision: Made")
-        
-        print(f"\n{'='*60}")
-        print("Enhanced trading system completed successfully!")
-        print(f"{'='*60}")
-        
-        # Close client
-        await kite_client.close()
-        
+            print(f"  🚀 Execution: {execution.get('execution_status', 'N/A')} | Order: {execution.get('order_id', 'None')}")
+
+        print(f"\n{'─'*60}")
+        print(f"  Debate rounds: {results.get('debate_round', 0)} | Risk rounds: {results.get('risk_discussion_round', 0)}")
+        print(f"  Total agent messages: {len(results.get('messages', []))}")
+        print(f"{'='*60}\n")
+
     except Exception as e:
-        logger.error(f"Error in enhanced trading system: {str(e)}")
-        print(f"Error: {str(e)}")
+        logger.error(f"Fatal error: {e}")
+        print(f"\n❌ Error: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
